@@ -13,7 +13,7 @@ const translate = new Translate();
 
 const text = ["这是一个非常好的API", "to jest bardzo dobre API"];
 
-async function detectLanguage() {
+async function detectLanguage() {// pass in text from textbox on UI
     let [detections] = await translate.detect(text);
     detections = Array.isArray(detections) ? detections : [detections];
     console.log("Detections:");
