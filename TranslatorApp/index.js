@@ -3,6 +3,25 @@ const http = require("http");
 const hostname = '127.0.0.1';
 const port = 3000;
 
+// Setting the environment variable with Google API credentials
+const credPath = process.argv[2];
+process.env.GOOGLE_APPLICATION_CREDENTIALS = credPath;
+
+const translate = new Translate();
+
+const text = ["这是一个非常好的API", "to jest bardzo dobre API"];
+
+async function detectLanguage() {
+    let [detections] = await translate.detect(text);
+    detections = Array.isArray(detections) ? detections : [detections];
+    console.log("Detections:");
+    detections.forEach((detection) => {
+        console.log(detection);
+    });
+}
+
+detectLanguage();
+
 //Create HTTP server and listen on port 3000 for requests
 const server = http.createServer((req, res) => {
 
