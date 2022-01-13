@@ -7,6 +7,8 @@ const port = 3000;
 const credPath = process.argv[2];
 process.env.GOOGLE_APPLICATION_CREDENTIALS = credPath;
 
+const {Translate} = require('@google-cloud/translate').v2;
+
 const translate = new Translate();
 
 const text = ["这是一个非常好的API", "to jest bardzo dobre API"];
