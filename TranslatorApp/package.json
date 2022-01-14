@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "app": "node index.js ./credentials.json"
+    "app": "node index.js"
   },
   "author": "",
   "license": "ISC",
