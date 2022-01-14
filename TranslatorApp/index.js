@@ -51,10 +51,11 @@ app.get('/',(req,res)=>{
   //res.end('Hello World, this is From What to What\n');
 //});
 
-app.listen(3000,()=>{
-  console.log("Server running on port",3000)
+app.listen(port,()=>{
+  console.log(`Server running on port ${port}`);
 });
+
 //listen for request on port 3000, and as a callback function have the port listened on logged
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+//server.listen(port, hostname, () => {
+  //console.log(`Server running at http://${hostname}:${port}/`);
+//});
