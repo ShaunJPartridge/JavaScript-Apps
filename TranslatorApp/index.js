@@ -40,8 +40,7 @@ nunjucks.configure(path.resolve(__dirname,'templates'),{
 
 app.get('/',(req,res)=>{
   res.render('index.html',{
-    title:'From What to What?',
-    translatedTxt: req
+    title:'From What to What?'
   });
 });
 //Create HTTP server and listen on port 3000 for requests
@@ -56,12 +55,12 @@ app.listen(port,()=>{
   console.log(`Server running on port ${port}`);
 });
 
-async function translate(){
-  translatedTxt = "";
+function translate() {
   translatedTxt = document.getElementById('srcTxt').textContent;
   console.log(translatedTxt)
 }
 
+document.getElementById('tBtn').onclick = translate;
 //listen for request on port 3000, and as a callback function have the port listened on logged
 //server.listen(port, hostname, () => {
   //console.log(`Server running at http://${hostname}:${port}/`);
