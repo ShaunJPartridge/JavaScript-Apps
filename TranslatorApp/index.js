@@ -40,7 +40,8 @@ nunjucks.configure(path.resolve(__dirname,'templates'),{
 
 app.get('/',(req,res)=>{
   res.render('index.html',{
-    title:'From What to What?'
+    title:'From What to What?',
+    translatedTxt: req
   });
 });
 //Create HTTP server and listen on port 3000 for requests
