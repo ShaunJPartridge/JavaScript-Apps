@@ -1,11 +1,11 @@
 //Load HTTP module
-const http = require("http");
-const hostname = '127.0.0.1';
-const port = 3000;
+//const http = require("http");
+//const hostname = '127.0.0.1';
+//const port = 3000;
 
 // Setting the environment variable with Google API credentials
-const credPath = process.argv[2];
-process.env.GOOGLE_APPLICATION_CREDENTIALS = credPath;
+//const credPath = process.argv[2];
+//process.env.GOOGLE_APPLICATION_CREDENTIALS = credPath;
 
 //const {Translate} = require('@google-cloud/translate').v2;
 //const translate = new Translate();
@@ -23,10 +23,12 @@ process.env.GOOGLE_APPLICATION_CREDENTIALS = credPath;
 //detectLanguage();
 
 const express = require('express');
-const path = require('path');
+//const path = require('path');
 const nunjucks = require('nunjucks');
-const app = express();
+const {TranslationService} = require('@google-cloud/translate'); 
 
+const app = express();
+app.use(express.urlencoded({extended:true}));
 // Uncomment code below if using css files 
 //app.use(express.static(path.resolve(__dirname,'styles')));
 
@@ -37,6 +39,21 @@ nunjucks.configure(path.resolve(__dirname,'templates'),{
   noCache:false,
   watch:true
 });
+
+const Translator = new TranslationService();
+
+const PORT = process.env.PORT || 8080;
+let folder;
+
+Translator.getProjectId().then(res => {
+  folder = `projects/${res}`;
+});
+
+async function getText(req,rep){
+  if(req.method === 'POST'){
+    
+  }
+}
 
 app.get('/',(req,res)=>{
   res.render('index.html',{
@@ -60,7 +77,7 @@ function translate() {
   console.log(translatedTxt)
 }
 
-document.getElementById('tBtn').onclick = translate;
+//document.getElementById('tBtn').onclick = translate;
 //listen for request on port 3000, and as a callback function have the port listened on logged
 //server.listen(port, hostname, () => {
   //console.log(`Server running at http://${hostname}:${port}/`);
