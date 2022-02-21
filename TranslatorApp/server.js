@@ -61,6 +61,7 @@ async function getText(req,rep){
   //});
 //});
 app.get('/',(req,res) => {
+  title = "From What to What?";
   res.sendFile(path.join(__dirname),'templates/index.html')
 })
 
