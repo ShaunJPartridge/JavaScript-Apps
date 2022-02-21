@@ -55,18 +55,15 @@ async function getText(req,rep){
   }
 }
 
-app.get('/',(req,res)=>{
-  res.render('index.html',{
-    title:'From What to What?'
-  });
-});
-//Create HTTP server and listen on port 3000 for requests
-//const server = http.createServer((req, res) => {
-  //Set the response HTTP header with HTTP status and Content type
-  //res.statusCode = 200;
-  //res.setHeader('Content-Type', 'text/plain');
-  //res.end('Hello World, this is From What to What\n');
+//app.get('/',(req,res)=>{
+  //res.render('index.html',{
+    //title:'From What to What?'
+  //});
 //});
+app.get('/',(req,res) => {
+  res.sendFile(path.join(__dirname),'templates/index.html')
+})
+
 
 app.listen(port,()=>{
   console.log(`Server running on port ${port}`);
@@ -77,8 +74,3 @@ function translate() {
   console.log(translatedTxt)
 }
 
-//document.getElementById('tBtn').onclick = translate;
-//listen for request on port 3000, and as a callback function have the port listened on logged
-//server.listen(port, hostname, () => {
-  //console.log(`Server running at http://${hostname}:${port}/`);
-//});
