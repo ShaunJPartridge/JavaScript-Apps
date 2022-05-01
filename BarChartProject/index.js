@@ -1,4 +1,5 @@
 let url = "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json";
+var XMLHttpRequest = require('xhr2');
 let req = new XMLHttpRequest();
 
 let data
