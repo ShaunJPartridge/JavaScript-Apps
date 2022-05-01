@@ -20,3 +20,34 @@ let drawCanvas = () => {
     svg.attr('height',height)
 }
 
+let genScales = () => {
+
+}
+
+let genBars = () => {
+
+}
+
+let genAxes = () => {
+
+}
+
+req.open("GET",url,true);
+req.send();
+req.onload = function(){
+    console.log(req.responseText)
+    //const json = JSON.parse(req.responseText);
+    //let html = "";
+    // Add your code below this line
+    //json.forEach((val) => {
+      //  const keys = Object.keys(val);
+        //html += "<div class='bar'>";
+        //keys.forEach((key) => {
+        //    html += "<strong>" + key + "</strong>: " + val[key] + "<br>";
+        //});
+        //html += "</div><br>";
+    //});
+
+        // Add your code above this line
+    //document.getElementsByClassName('message')[0].innerHTML = html;
+};
