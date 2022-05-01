@@ -15,7 +15,8 @@ let padding = 40
 
 let svg = d3.select('svg')
 
-let canvas = () => {
+let drawCanvas = () => {
     svg.attr('width',width)
     svg.attr('height',height)
 }
+
