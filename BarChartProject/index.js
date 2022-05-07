@@ -2,7 +2,6 @@ let url = "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/m
 let req = new XMLHttpRequest();
 
 let data
-let values
 
 let xScale
 let yScale
