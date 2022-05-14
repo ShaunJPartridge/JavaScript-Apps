@@ -3,4 +3,4 @@ export const buildTeams = (names,ranks) => {
         console.log({name:el, rank:ranks[ind]});
         return {name:el, rank:ranks[ind]};
     })
-}
+};
