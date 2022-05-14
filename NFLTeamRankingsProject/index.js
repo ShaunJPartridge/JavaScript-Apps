@@ -1,4 +1,4 @@
-import {createTeams} from './teams.js';
+import {buildTeams} from 'NFLTeamRankingsProject\teams.js';
 const cheerio = require('cheerio');
 const request = require('request');
 
@@ -42,6 +42,6 @@ request({
     // team names. Then split comma delimited string to get an array of team names;
     let teams = nflTitles.text().replace(/([a-z])([A-Z])/g,'$1,$2').split(',');
 
-    createTeams(teams,ranks);
+    buildTeams(teams,ranks);
     
 });
