@@ -1,4 +1,4 @@
-import {buildTeams} from 'NFLTeamRankingsProject\teams.js';
+import {buildTeams} from './teams.js';
 const cheerio = require('cheerio');
 const request = require('request');
 
