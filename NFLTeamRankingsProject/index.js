@@ -1,7 +1,7 @@
 const cheerio = require('cheerio');
 const request = require('request');
 
-//import {buildTeams} from './teams.js';
+import {buildTeams} from './teams.js';
 
 request({
     method: 'GET',
