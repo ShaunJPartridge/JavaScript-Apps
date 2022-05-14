@@ -1,15 +1,7 @@
-const fs = require('fs');
-const got = require('got');
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
-
-const vgmUrl= 'https://www.vgmusic.com/music/console/nintendo/nes';
-
-got(vgmUrl).then(response => {
-  const dom = new JSDOM(response.body);
-    dom.window.document.querySelectorAll('a').forEach(link => {
-    console.log(link.href);
-  });
-}).catch(err => {
-  console.log(err);
-});
+Document doc = Jsoup.connect("https://en.wikipedia.org/").get();
+log(doc.title());
+Elements newsHeadlines = doc.select("#mp-itn b a");
+for (Element headline : newsHeadlines) {
+  log("%s\n\t%s", 
+    headline.attr("title"), headline.absUrl("href"));
+}
