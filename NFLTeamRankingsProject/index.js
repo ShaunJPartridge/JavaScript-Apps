@@ -1,7 +1,7 @@
 const cheerio = require('cheerio');
 const request = require('request');
 
-import {buildTeams} from './teams.js';
+//import {buildTeams} from './teams.js';
 
 request({
     method: 'GET',
@@ -10,15 +10,30 @@ request({
 
     if (err) return console.error(err);
 
+    // Load the body of the response
     let $ = cheerio.load(body);
 
     // Get all 32 teams' names, ranks, and logo
     let nflTitles = $('.nfl-o-ranked-item__title');
     let nflRanks = $('.nfl-o-ranked-item__label--second');
-
+    //let nflLogos = $('.nfl-o-ranked-item__image');
     
+    // Pass in team ranks string to getRanks to parse it for each teams' rank
+    let ranks = getRanks(nflRanks.text());
 
-    let ranks = nflRanks.text();
+    // Use regex to get seperate team names. Next add a comma to string between
+    // team names. Then split comma delimited string to get an array of team names;
+    let teams = nflTitles.text().replace(/([a-z])([A-Z])/g,'$1,$2').split(',');
+
+    // Pass in team names, along with their ranks to buildTeams to create
+    // an array of team objects
+    teams = buildTeams(teams,ranks);
+    
+    
+});
+
+// Method: getRanks
+const getRanks = (ranks) => {
     let tmp = '';
     // For loop to get all 32 teams' ranks 
     for(let i = 0;i < ranks.length;){
@@ -38,10 +53,13 @@ request({
     // filled with integers 1-32.
     ranks = tmp.replace(/,$/,'').split(',');
 
-    // Use regex to get seperate team names. Next add a comma to string between
-    // team names. Then split comma delimited string to get an array of team names;
-    let teams = nflTitles.text().replace(/([a-z])([A-Z])/g,'$1,$2').split(',');
+    return ranks;
+}
 
-    buildTeams(teams,ranks);
-    
-});
+// Method: buildTeams
+const buildTeams = (names,ranks) => {
+    return names.map((el,ind) => {
+        //console.log({team:el, rank:ranks[ind]});
+        return {team:el, rank:Number(ranks[ind])};
+    })
+};
