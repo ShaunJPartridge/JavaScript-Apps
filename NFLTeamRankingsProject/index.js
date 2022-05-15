@@ -4,6 +4,7 @@ import * as cheerio from 'cheerio';
 import * as request from 'request';
 import * as d3 from 'd3';
 
+
 // variables for building the svg canvas
 let width = 800;
 let height = 500;
