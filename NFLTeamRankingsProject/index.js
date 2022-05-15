@@ -1,5 +1,6 @@
 const cheerio = require('cheerio');
 const request = require('request');
+import * as d3 from 'd3';
 
 // variables for building the svg canvas
 let width = 800;
