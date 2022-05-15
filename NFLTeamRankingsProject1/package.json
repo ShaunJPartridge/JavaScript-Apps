@@ -1,0 +1,16 @@
+{
+  "name": "nflteamrankingsproject",
+  "version": "1.0.0",
+  "description": "This app will display all 32 NFL teams on a graph according to their ranking in 2022.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shaun Partridge",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "d3": "^7.4.4",
+    "request": "^2.88.2"
+  }
+}
