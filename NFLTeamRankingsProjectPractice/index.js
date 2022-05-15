@@ -1,5 +1,7 @@
-const cheerio = require('cheerio');
-const request = require('request');
+//const cheerio = require('cheerio');
+//const request = require('request');
+import * as cheerio from 'cheerio';
+import * as request from 'request';
 import * as d3 from 'd3';
 
 // variables for building the svg canvas
@@ -36,7 +38,7 @@ request({
     teams = buildTeams(teams,ranks);
 
     // Build svg canvas
-    
+    drawCanvas();
     
 });
 
