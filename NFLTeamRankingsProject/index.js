@@ -1,15 +1,11 @@
-//const cheerio = require('cheerio');
-//const request = require('request');
+
 import * as cheerio from 'cheerio';
 import * as request from 'request';
 import * as d3 from 'd3';
 
 
 // variables for building the svg canvas
-let width = 800;
-let height = 500;
-let padding = 40;
-let svg = d3.select('svg');
+
 
 
 request({
@@ -39,7 +35,7 @@ request({
     teams = buildTeams(teams,ranks);
 
     // Build svg canvas
-    drawCanvas();
+    //drawCanvas();
     
 });
 
@@ -77,6 +73,6 @@ const buildTeams = (names,ranks) => {
 
 // Method: drawCanvas
 const drawCanvas = () => {
-    svg.attr('width',width);
-    svg.attr('height',height);
+    //svg.attr('width',width);
+    //svg.attr('height',height);
 }
