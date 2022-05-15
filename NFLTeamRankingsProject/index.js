@@ -1,7 +1,12 @@
 const cheerio = require('cheerio');
 const request = require('request');
 
-//import {buildTeams} from './teams.js';
+// variables for building the svg canvas
+let width = 800;
+let height = 500;
+let padding = 40;
+let svg = d3.select('svg');
+
 
 request({
     method: 'GET',
@@ -19,7 +24,7 @@ request({
     //let nflLogos = $('.nfl-o-ranked-item__image');
     
     // Pass in team ranks string to getRanks to parse it for each teams' rank
-    let ranks = getRanks(nflRanks.text());
+    ranks = getRanks(nflRanks.text());
 
     // Use regex to get seperate team names. Next add a comma to string between
     // team names. Then split comma delimited string to get an array of team names;
@@ -28,6 +33,8 @@ request({
     // Pass in team names, along with their ranks to buildTeams to create
     // an array of team objects
     teams = buildTeams(teams,ranks);
+
+    // Build svg canvas
     
     
 });
@@ -63,3 +70,9 @@ const buildTeams = (names,ranks) => {
         return {team:el, rank:Number(ranks[ind])};
     })
 };
+
+// Method: drawCanvas
+const drawCanvas = () => {
+    svg.attr('width',width);
+    svg.attr('height',height);
+}
