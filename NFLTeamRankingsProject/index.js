@@ -1,5 +1,6 @@
 import * as cheerio from 'cheerio';
 import request from 'request';
+import fs from 'fs';
 import * as d3 from 'd3';
 import { JSDOM } from 'jsdom';
 import {getRanks, buildTeams} from './teams.js';
@@ -8,6 +9,9 @@ import {getRanks, buildTeams} from './teams.js';
 let url = 'https://www.nfl.com/news/nfl-power-rankings-which-teams-improved-most-after-2022-nfl-draft';
 // Array for team objects
 var Teams;
+// Arrays for teams' names and ranks
+var ranks;
+var names;
 
 // create a JSDOM object with skeleton code to render html server-side
 const myDom = new JSDOM(`<!DOCTYPE html>
@@ -25,17 +29,68 @@ const myDom = new JSDOM(`<!DOCTYPE html>
 <script src="./index.js" type="module"></script>
 </html>`)
 
-let width = 800;
-let height = 600;
+// Variables for d3
+const width = 800;
+const height = 600;
+const padding = 40;
+const margins = {left:30, top:10, right:10, bottom:10}; 
+let xScale, yScale;
 let body = d3.select(myDom.window.document).select('body');// this is html body
 let svg = body.append('div').attr('class','canvas'); // this is part of html body
 
+const outputLocation = './output.svg';
+
+// Method: createScales()
+async function createScales(){
+    names.sort();
+
+    xScale = d3.scaleLinear()
+    .domain([d3.min(names),d3.max(names)])
+    .range([padding, width-padding]);
+
+    yScale = d3.scaleLinear()
+    .domain([d3.max(ranks),d3.min(ranks)])
+    .range([height-(padding*2),padding]);
+
+
+    drawData();
+
+}
+
+// Method: drawData()
 async function drawData(){
-    svg.selectAll("rect")
+    var bars = svg.selectAll("rect")
     .data(Teams)
     .enter()
-    .append('rect')
+    .append('rect');
+
+    bars.attr('x',(el) => {
+        return el.name;
+    })
+    .attr('y',(el) => {
+        return el.rank;
+    })
+    .attr('height',(el) => {
+        return yScale(el.rank);
+    })
+    .attr('width',12);
+
+    //console.log(body.select('.canvas').html());
+
+    drawAxes();
+}
+
+// Method: drawAxes()
+async function drawAxes(){
+    svg.append('g')
+    .attr('transform','translate(' + 0 + ', ' + (height-(padding*2)) + ')')
+    .call(d3.axisBottom(xScale));
+
+    svg.append('g')
+    .attr('transform','translate( ' + padding + ', ' + 0 + ')')
+    .call(d3.axisLeft(yScale));
     console.log(body.select('.canvas').html());
+    fs.writeFileSync(outputLocation, body.select('.canvas').html());
 }
 
 // Method: drawCanvas()
@@ -45,9 +100,9 @@ async function drawCanvas(){
     .attr('width',width)
     .attr('height',height);
     
-    svg
     console.log(body.select('.canvas').html());
-    console.log(Teams);
+    createScales();
+    //console.log(Teams);
 };
 
 // Method: scrapeData()
@@ -66,15 +121,15 @@ async function scrapeData(){
         //let nflLogos = $('.nfl-o-ranked-item__image');
     
         // Pass in team ranks string to getRanks to parse it for each teams' rank
-        let ranks = getRanks(nflRanks.text());
+        ranks = getRanks(nflRanks.text());
 
         // Use regex to get seperate team names. Next add a comma to string between
         // team names. Then split comma delimited string to get an array of team names;
-        let teams = nflTitles.text().replace(/([a-z])([A-Z])/g,'$1,$2').split(',');
+        names = nflTitles.text().replace(/([a-z])([A-Z])/g,'$1,$2').split(',');
 
         // Pass in team names, along with their ranks to buildTeams to create
         // an array of team objects
-        Teams = buildTeams(teams,ranks);
+        Teams = buildTeams(names,ranks);
         //console.log(teams);
 
         // Build svg canvas
