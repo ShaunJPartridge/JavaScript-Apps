@@ -98,7 +98,8 @@ async function drawCanvas(){
     //svg = body.append('div').attr('class','canvas')
     svg.append('svg')
     .attr('width',width)
-    .attr('height',height);
+    .attr('height',height)
+    .style('background-color','blue');
     
     console.log(body.select('.canvas').html());
     createScales();
