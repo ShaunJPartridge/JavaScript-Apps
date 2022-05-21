@@ -14,20 +14,8 @@ var ranks;
 var names;
 
 // create a JSDOM object with skeleton code to render html server-side
-const myDom = new JSDOM(`<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./index.css">
-    <title>2022 NFL Team Rankings</title>
-</head>
-<body>
-    <div id="title">2022 NFL Team Rankings</div>
-</body>
-<script src="./index.js" type="module"></script>
-</html>`)
+let html = fs.readFileSync('./index.html');
+const myDom = new JSDOM(html);
 
 // Variables for d3
 const width = 800;
@@ -37,8 +25,9 @@ const margins = {left:30, top:10, right:10, bottom:10};
 let xScale, yScale;
 let body = d3.select(myDom.window.document).select('body');// this is html body
 let svg = body.append('div').attr('class','canvas'); // this is part of html body
+//console.log(myDom.window.document.querySelector('html').innerHTML)
 
-const outputLocation = './output.svg';
+const outputLocation = 'output.svg';
 
 // Method: createScales()
 async function createScales(){
@@ -53,7 +42,7 @@ async function createScales(){
     .range([height-(padding*2),padding]);
 
 
-    drawData();
+    //drawData();
 
 }
 
@@ -75,9 +64,9 @@ async function drawData(){
     })
     .attr('width',12);
 
-    //console.log(body.select('.canvas').html());
+    console.log(body.select('.canvas').html());
 
-    drawAxes();
+    //drawAxes();
 }
 
 // Method: drawAxes()
@@ -89,20 +78,43 @@ async function drawAxes(){
     svg.append('g')
     .attr('transform','translate( ' + padding + ', ' + 0 + ')')
     .call(d3.axisLeft(yScale));
-    console.log(body.select('.canvas').html());
+    //console.log(body.select('.canvas').html());
+    //console.log(body.html());
     fs.writeFileSync(outputLocation, body.select('.canvas').html());
 }
 
 // Method: drawCanvas()
 async function drawCanvas(){
     //svg = body.append('div').attr('class','canvas')
+    createScales();
     svg.append('svg')
     .attr('width',width)
     .attr('height',height)
-    .style('background-color','blue');
-    
+    .style('background-color','blue')
+    .selectAll("rect")
+    .data(Teams)
+    .enter()
+    .append('rect')
+    .attr('x',(el) => {
+        return el.name;
+    })
+    .attr('y',(el) => {
+        return el.rank;
+    })
+    .attr('height',(el) => {
+        return yScale(el.rank);
+    })
+    .attr('width',12);
+    //console.log(svg.html());
     console.log(body.select('.canvas').html());
-    createScales();
+
+    drawAxes();
+
+    //console.log(body.select('.canvas').html());
+    //console.log(myDom.window.document.querySelector('html').innerHTML)// Prints all html built
+    //fs.writeFileSync(outputLocation, body.select('.canvas').html());
+    
+    //createScales();
     //console.log(Teams);
 };
 
