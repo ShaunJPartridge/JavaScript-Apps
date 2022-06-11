@@ -23,9 +23,12 @@ export const getRanks = (ranks) => {
 }
 
 // Method: buildTeams()
-export const buildTeams = (names,ranks) => {
+export const buildTeams = (names,ranks,logos) => {
     return names.map((el,ind) => {
         //console.log({team:el, rank:ranks[ind]});
-        return {team:el, rank:Number(ranks[ind])};
+        return {team:el, 
+            rank:Number(ranks[ind]),
+            logo: logos[ind] 
+        };
     })
 };
